@@ -1,19 +1,19 @@
 services:
   audio-analysis-backend:
-    image: ghcr.io/binuengoor/audio-analysis-key-bpm-backend:latest
+    build: ./backend
+    platform: linux/amd64
     container_name: audio-analysis-backend
-    restart: unless-stopped 
     ports:
       - "8000:8000"
     volumes:
+      - ./backend:/app
       - ./data:/data
     environment:
       - PYTHONUNBUFFERED=1
 
   audio-analysis-frontend:
-    image: ghcr.io/binuengoor/audio-analysis-key-bpm-frontend:latest
+    build: ./frontend
     container_name: audio-analysis-frontend
-    restart: unless-stopped 
     ports:
       - "3000:80"
     depends_on:

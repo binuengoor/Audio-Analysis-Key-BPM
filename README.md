@@ -34,15 +34,27 @@ docker-compose.yml – Local two-service stack
 
 ## Running with Docker Compose
 
+### Use pre-built GHCR images (default)
+
 ```fish
 cd /Users/millionmax/Documents/Git/audio-analysis-key-bpm
-docker compose up --build
+docker login ghcr.io -u <github-username> -p <ghcr-token>
+docker compose pull
+docker compose up -d
 ```
 
 - Frontend → http://localhost:3000
 - Backend API → http://localhost:8000
 
-Stop everything with `docker compose down`.
+### Build the images locally
+
+If you want to hack on the Dockerfiles, use the alternate compose file that restores the local build contexts and backend code mount:
+
+```fish
+docker compose -f docker-compose.build.yml up --build
+```
+
+Stop either stack with `docker compose [-f docker-compose.build.yml] down`.
 
 ## Local development workflows
 
