@@ -1,50 +1,21 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Project Constitution
 
-## Core Principles
+## 1. Architectural Integrity
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+  - **Container-First:** This application runs strictly inside Docker. Do not assume local paths or local libraries (like ffmpeg) exist on the host machine.
+  - **Cross-Platform:** The Docker setup must support both `linux/amd64` (Intel) and `linux/arm64` (Apple Silicon).
+  - **Backend:** Python 3.10+ using **FastAPI**. All I/O must be strictly typed using **Pydantic** models.
+  - **Frontend:** React 18+ using **Vite**. Use **TypeScript** for everything. State management via **Zustand**.
+  - **Persistence:** Use **SQLite** for session tracking. Do not introduce Redis or Postgres; keep the footprint small.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+## 2. Audio Processing Standards
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+  - **Library Priority:** Use `essentia.standard` for Key and BPM analysis. Use `librosa` only for waveform visualization data.
+  - **Sampling:** All audio must be resampled to 44.1kHz mono before analysis to ensure algorithm accuracy.
+  - **Threading:** Bulk processing must be **Single-Threaded** to prevent CPU choking. Use a simple FIFO queue.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+## 3. Coding Standards
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+  - **Frontend:** Use Tailwind CSS for styling. Components must be functional and typed.
+  - **Error Handling:** Every API endpoint must handle `500` errors gracefully and return structured JSON error messages.
+  - **Documentation:** All complex algorithms (especially the Silence Removal math) must be commented with the "Why", not just the "How".

@@ -1,0 +1,30 @@
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage*
+*.egg-info/
+
+# Editor & OS
+.DS_Store
+.vscode/
+
+# Env files
+.env
+.env.*
+
+# Node / Vite
+node_modules/
+dist/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+
+# Runtime audio data
+music_in/
+data/input/*
+!data/input/.gitkeep
+data/output/*
+!data/output/.gitkeep
+

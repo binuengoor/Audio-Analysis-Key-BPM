@@ -1,0 +1,18 @@
+[
+  {
+    "id": "8b54b013-9a3d-4985-b68c-bcc1afe098eb",
+    "filename": "Aayat_laal ishq cover.mp3",
+    "input_path": "Aayat_laal ishq cover.mp3",
+    "output_path": null,
+    "analysis": {
+      "bpm": 90.4,
+      "bpm_confidence": 0.21026620268821716,
+      "key_standard": "D Major",
+      "key_camelot": "10B",
+      "key_confidence": 0.8546022772789001,
+      "duration": 206.08895691609976
+    },
+    "created_at": 1765381178.6396601,
+    "status": "completed"
+  }
+]
