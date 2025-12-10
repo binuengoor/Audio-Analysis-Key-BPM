@@ -3,6 +3,22 @@ import { useAudioStore } from '../store/useAudioStore';
 import { AudioFile } from '../types';
 import { buildBackendUrl } from '../config';
 
+const generateId = () => {
+  if (typeof crypto !== 'undefined') {
+    if ('randomUUID' in crypto && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+
+    if ('getRandomValues' in crypto && typeof crypto.getRandomValues === 'function') {
+      const array = new Uint32Array(4);
+      crypto.getRandomValues(array);
+      return Array.from(array, (segment) => segment.toString(16).padStart(8, '0')).join('-');
+    }
+  }
+
+  return `audio-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
+
 export const UploadZone = () => {
   const [isDragging, setIsDragging] = useState(false);
   const { addAudioFiles, updateFileStatus } = useAudioStore();
@@ -50,7 +66,7 @@ export const UploadZone = () => {
 
     const newAudioFiles: AudioFile[] = validFiles.map(file => ({
       file,
-      id: crypto.randomUUID(),
+      id: generateId(),
       status: 'uploading' // Start as uploading
     }));
 
