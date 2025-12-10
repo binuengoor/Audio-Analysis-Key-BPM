@@ -45,6 +45,7 @@ docker compose up -d
 
 - Frontend → http://localhost:3000
 - Backend API → http://localhost:8000
+- The frontend's NGINX proxy forwards `/api/*` and `/files/*` to the backend container, so only the frontend port needs to be exposed externally.
 
 ### Build the images locally
 

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useAudioStore } from '../store/useAudioStore';
 import { AudioFile } from '../types';
+import { buildBackendUrl } from '../config';
 
 export const UploadZone = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -22,8 +23,7 @@ export const UploadZone = () => {
     formData.append('file', file);
 
     try {
-      // Note: In production, use an environment variable for the API URL
-      const response = await fetch('http://localhost:8000/api/upload', {
+      const response = await fetch(buildBackendUrl('/api/upload'), {
         method: 'POST',
         body: formData,
       });

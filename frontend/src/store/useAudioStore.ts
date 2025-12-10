@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { AudioFile, AnalysisResult, LibraryEntry } from '../types';
+import { buildBackendUrl } from '../config';
 
 interface AppState {
   queue: AudioFile[];
@@ -61,7 +62,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
     }));
 
     try {
-      const response = await fetch('http://localhost:8000/api/analyze', {
+      const response = await fetch(buildBackendUrl('/api/analyze'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename: file.file.name }),
@@ -95,7 +96,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
     try {
       const filenames = pendingFiles.map(f => f.file.name);
-      await fetch('http://localhost:8000/api/queue', {
+      await fetch(buildBackendUrl('/api/queue'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filenames }),
@@ -118,7 +119,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
   pollBatchStatus: async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/status');
+      const response = await fetch(buildBackendUrl('/api/status'));
       const status = await response.json();
       
       set((state: AppState) => {
@@ -151,7 +152,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
     if (!file || !file.result) return;
 
     try {
-      const response = await fetch('http://localhost:8000/api/process', {
+      const response = await fetch(buildBackendUrl('/api/process'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -180,7 +181,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
   fetchLibrary: async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/library');
+      const response = await fetch(buildBackendUrl('/api/library'));
       if (!response.ok) throw new Error('Failed to fetch library');
       const newLibrary: LibraryEntry[] = await response.json();
 
@@ -201,7 +202,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
   deleteInput: async (id: string) => {
     try {
-      await fetch(`http://localhost:8000/api/library/${id}/input`, { method: 'DELETE' });
+      await fetch(buildBackendUrl(`/api/library/${id}/input`), { method: 'DELETE' });
       get().fetchLibrary();
     } catch (error) {
       console.error('Delete input failed', error);
@@ -210,7 +211,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
   deleteOutput: async (id: string) => {
     try {
-      await fetch(`http://localhost:8000/api/library/${id}/output`, { method: 'DELETE' });
+      await fetch(buildBackendUrl(`/api/library/${id}/output`), { method: 'DELETE' });
       get().fetchLibrary();
     } catch (error) {
       console.error('Delete output failed', error);
@@ -219,7 +220,7 @@ export const useAudioStore = create<AppState>((set, get) => ({
 
   clearLibrary: async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/library', {
+      const response = await fetch(buildBackendUrl('/api/library'), {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to clear library');

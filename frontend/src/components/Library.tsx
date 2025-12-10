@@ -1,6 +1,7 @@
 import { useAudioStore } from '../store/useAudioStore';
 import { WaveformPlayer } from './WaveformPlayer';
 import { LibraryEntry } from '../types';
+import { buildBackendUrl } from '../config';
 
 export const Library = () => {
   const {
@@ -13,8 +14,8 @@ export const Library = () => {
   } = useAudioStore();
 
   const getPreviewUrl = (entry: LibraryEntry) => {
-    if (entry.output_path) return `http://localhost:8000/files/output/${entry.output_path}`;
-    if (entry.input_path) return `http://localhost:8000/files/input/${entry.input_path}`;
+    if (entry.output_path) return buildBackendUrl(`/files/output/${entry.output_path}`);
+    if (entry.input_path) return buildBackendUrl(`/files/input/${entry.input_path}`);
     return null;
   };
 

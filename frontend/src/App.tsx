@@ -3,6 +3,7 @@ import { UploadZone } from './components/UploadZone';
 import { WaveformPlayer } from './components/WaveformPlayer';
 import { Library } from './components/Library';
 import { useAudioStore } from './store/useAudioStore';
+import { buildBackendUrl } from './config';
 
 function App() {
   const { activeTab, queue, activeFileId, analyzeFile, processOutput, setActiveTab } = useAudioStore();
@@ -150,7 +151,7 @@ function App() {
                   <div className="bg-slate-900 rounded-lg border border-slate-800 p-4">
                     <h3 className="text-lg font-medium text-white mb-4">Waveform Preview</h3>
                     <WaveformPlayer 
-                      audioUrl={`http://localhost:8000/files/input/${activeFile.file.name}`}
+                      audioUrl={buildBackendUrl(`/files/input/${activeFile.file.name}`)}
                     />
                   </div>
                 </div>
