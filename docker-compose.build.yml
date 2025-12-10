@@ -13,6 +13,7 @@ services:
 
   audio-analysis-frontend:
     build: ./frontend
+    platform: linux/amd64
     container_name: audio-analysis-frontend
     ports:
       - "3000:80"

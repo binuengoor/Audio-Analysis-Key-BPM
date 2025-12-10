@@ -2,6 +2,7 @@ services:
   audio-analysis-backend:
     image: ghcr.io/binuengoor/audio-analysis-key-bpm-backend:latest
     container_name: audio-analysis-backend
+    platform: linux/amd64
     restart: unless-stopped 
     ports:
       - "8000:8000"
@@ -13,6 +14,7 @@ services:
   audio-analysis-frontend:
     image: ghcr.io/binuengoor/audio-analysis-key-bpm-frontend:latest
     container_name: audio-analysis-frontend
+    platform: linux/amd64
     restart: unless-stopped 
     ports:
       - "3000:80"

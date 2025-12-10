@@ -46,6 +46,14 @@ docker compose up -d
 - Frontend → http://localhost:3000
 - Backend API → http://localhost:8000
 - The frontend's NGINX proxy forwards `/api/*` and `/files/*` to the backend container, so only the frontend port needs to be exposed externally.
+- **Running on ARM hosts** (Oracle Ampere, Raspberry Pi, Apple Silicon without Docker Desktop): install QEMU binfmt emulation once so the amd64 images can run:
+
+```bash
+sudo apt update && sudo apt install -y qemu-user-static
+docker run --privileged --rm tonistiigi/binfmt --install amd64
+```
+
+The compose files already pin `platform: linux/amd64`, so once binfmt is installed `docker compose up -d` works the same way on ARM.
 
 ### Build the images locally
 
