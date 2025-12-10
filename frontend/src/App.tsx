@@ -151,7 +151,7 @@ function App() {
                   <div className="bg-slate-900 rounded-lg border border-slate-800 p-4">
                     <h3 className="text-lg font-medium text-white mb-4">Waveform Preview</h3>
                     <WaveformPlayer 
-                      audioUrl={buildBackendUrl(`/files/input/${activeFile.file.name}`)}
+                      audioUrl={activeFile.previewUrl ?? buildBackendUrl(`/files/input/${activeFile.file.name}`)}
                     />
                   </div>
                 </div>

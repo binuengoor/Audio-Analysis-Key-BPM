@@ -12,6 +12,7 @@ export interface AudioFile {
   id: string;
   status: 'uploading' | 'pending' | 'processing' | 'completed' | 'error';
   result?: AnalysisResult;
+  previewUrl?: string;
 }
 
 export interface LibraryEntry {

@@ -67,7 +67,8 @@ export const UploadZone = () => {
     const newAudioFiles: AudioFile[] = validFiles.map(file => ({
       file,
       id: generateId(),
-      status: 'uploading' // Start as uploading
+      status: 'uploading', // Start as uploading
+      previewUrl: URL.createObjectURL(file)
     }));
 
     addAudioFiles(newAudioFiles);

@@ -43,11 +43,19 @@ export const useAudioStore = create<AppState>((set, get) => ({
   setActiveFile: (id) => set({ activeFileId: id }),
   setSelectedLibraryEntry: (entry) => set({ selectedLibraryEntry: entry }),
   
-  addAudioFiles: (files) => set(() => ({
-    // Replace queue instead of appending to enforce single-file workflow
-    queue: files,
-    activeFileId: files.length > 0 ? files[0].id : null
-  })),
+  addAudioFiles: (files) => set((state) => {
+    state.queue.forEach((item) => {
+      if (item.previewUrl && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
+        URL.revokeObjectURL(item.previewUrl);
+      }
+    });
+
+    return {
+      // Replace queue instead of appending to enforce single-file workflow
+      queue: files,
+      activeFileId: files.length > 0 ? files[0].id : null
+    };
+  }),
   
   updateFileStatus: (id, status) => set((state) => ({
     queue: state.queue.map((f) => f.id === id ? { ...f, status } : f)
